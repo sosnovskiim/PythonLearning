@@ -21,13 +21,13 @@ d1.clear()
 print(d1)
 
 d2 = dict()
-d2['test'] = d2.setdefault('test', []).append('tests')
+d2['Задание 2. Папка с файлами'] = d2.setdefault('Задание 2. Папка с файлами', []).append('tests')
 print(d2)
 
 from collections import defaultdict
 
 d3 = defaultdict(list)
-d3['test'].append('test')
+d3['Задание 2. Папка с файлами'].append('Задание 2. Папка с файлами')
 print(d3)
 
 d4 = {'A': '-.-.',

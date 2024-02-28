@@ -12,7 +12,7 @@ print(f'3. Тип операционной системы:\n{d[os.name]}')
 input()
 
 print('4. Проверка существования файла:'
-      f"\n{'Файл test.txt существует' if os.path.isfile('test.txt') else 'Файл test.txt не существует'}")
+      f"\n{'Файл Задание 2. Папка с файлами.txt существует' if os.path.isfile('Задание 2. Папка с файлами.txt') else 'Файл Задание 2. Папка с файлами.txt не существует'}")
 input()
 
 print('5. Содержимое текущей папки:')
@@ -26,7 +26,7 @@ for root, dirs, files in os.walk(os.getcwd()):
     [print(f'\t{f}') for f in files]
 input()
 
-dir_name = 'test'
+dir_name = 'Задание 2. Папка с файлами'
 print('7. Создание папки:')
 if os.path.isdir(dir_name):
     print(f'Папка {dir_name} уже существует')
@@ -61,14 +61,14 @@ print(f'11. Абсолютный путь до файла {file_name}: {os.path.
       f'    Его размер: {os.path.getsize(file_name)} байт')
 input()
 
-shutil.copy(os.path.join(os.curdir, file_name), '../../')
-if os.path.isfile(os.path.join('../../', file_name)):
+shutil.copy(os.path.join(os.curdir, file_name), '../')
+if os.path.isfile(os.path.join('../', file_name)):
     print('12. Файл успешно скопирован')
 else:
     print('12. Файл не скопирован')
 input()
 
-os.chdir('../../')
+os.chdir('../')
 print('13. Переход на уровень выше и текущая директория с учетом вложенности:')
 for root, dirs, files in os.walk(os.getcwd()):
     print(f'{root}')
