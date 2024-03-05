@@ -1,8 +1,8 @@
 n = int(input())
 d = dict()
 for _ in range(n):
-    a = input().split()
-    d[a[0]] = a[1:]
+    n, *p = input().split()
+    d[n] = p
 s = input()
 f = True
 for k, v in sorted(d.items()):
