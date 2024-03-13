@@ -26,7 +26,7 @@ for root, dirs, files in os.walk(os.getcwd()):
     [print(f'\t{f}') for f in files]
 input()
 
-dir_name = 'Задание 2. Папка с файлами'
+dir_name = 'Задание 2. Поиск файлов и в файлах/Задание 2. Папка с файлами'
 print('7. Создание папки:')
 if os.path.isdir(dir_name):
     print(f'Папка {dir_name} уже существует')
