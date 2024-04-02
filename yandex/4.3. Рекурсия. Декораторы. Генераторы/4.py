@@ -5,11 +5,10 @@ def answer(f):
     return dec
 
 
-if __name__ == '__main__':
-    @answer
-    def a_plus_b(a, b):
-        return a + b
+@answer
+def a_plus_b(a, b):
+    return a + b
 
 
-    print(a_plus_b(3, 5))
-    print(a_plus_b(7, 9))
+print(a_plus_b(3, 5))
+print(a_plus_b(7, 9))
