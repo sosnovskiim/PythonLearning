@@ -1,4 +1,5 @@
 from PyQt6 import QtWidgets
+from PyQt6 import QtCore
 import sys
 
 
@@ -55,6 +56,14 @@ class MyWindow(QtWidgets.QWidget):
             (self.window_width - self.button_width) // 2, self.window_height - self.margin * 2
         )
         self.buttonCount.clicked.connect(self.on_click_reset)
+
+        #
+        self.timeEvent = QtWidgets.QTimeEdit(self)
+        self.timeEvent.clear()
+        self.timeEvent.time()
+        self.calendarEvent = QtWidgets.QCalendarWidget(self)
+        self.calendarEvent.setSelectedDate(QtCore.QDate(2024, 3, 2))
+        self.calendarEvent.selectedDate()
 
         self.show()
 
