@@ -5,6 +5,7 @@ def answer(f):
     return dec
 
 
+"""
 @answer
 def a_plus_b(a, b):
     return a + b
@@ -12,3 +13,4 @@ def a_plus_b(a, b):
 
 print(a_plus_b(3, 5))
 print(a_plus_b(7, 9))
+"""

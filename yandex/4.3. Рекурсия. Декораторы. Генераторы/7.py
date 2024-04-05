@@ -10,12 +10,13 @@ def same_type(f):
     return dec
 
 
-if __name__ == '__main__':
-    @same_type
-    def a_plus_b(a, b):
-        return a + b
+"""
+@same_type
+def a_plus_b(a, b):
+    return a + b
 
 
-    print(a_plus_b(3, 5.2) or 'Fail')
-    print(a_plus_b(7, '9') or 'Fail')
-    print(a_plus_b(-3, 5) or 'Fail')
+print(a_plus_b(3, 5.2) or 'Fail')
+print(a_plus_b(7, '9') or 'Fail')
+print(a_plus_b(-3, 5) or 'Fail')
+"""

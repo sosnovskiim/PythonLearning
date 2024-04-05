@@ -1,0 +1,107 @@
+[
+    {
+        "name": "Aquila",
+        "abbreviation": "Aql",
+        "area": 652,
+        "brightest_stars": [
+            {
+                "name": "Altair",
+                "brightness": 0.76
+            },
+            {
+                "name": "Tarazed",
+                "brightness": 2.72
+            }
+        ],
+        "bordering_constellations": [
+            "Sagitta",
+            "Hercules",
+            "Ophiuchus",
+            "Serpens Cauda",
+            "Scutum",
+            "Sagittarius",
+            "Capricornus",
+            "Aquarius",
+            "Delphinus"
+        ]
+    },
+    {
+        "name": "Cygnus",
+        "abbreviation": "Cyg",
+        "area": 804,
+        "brightest_stars": [
+            {
+                "name": "Deneb",
+                "brightness": 1.25
+            },
+            {
+                "name": "Sadr",
+                "brightness": 2.23
+            },
+            {
+                "name": "Aljanah",
+                "brightness": 2.48
+            },
+            {
+                "name": "Fawaris",
+                "brightness": 2.87
+            }
+        ],
+        "bordering_constellations": [
+            "Cepheus",
+            "Draco",
+            "Lyra",
+            "Vulpecula",
+            "Pegasus",
+            "Lacerta"
+        ]
+    },
+    {
+        "name": "Eridanus",
+        "abbreviation": "Eri",
+        "area": 1138,
+        "brightest_stars": [
+            {
+                "name": "Achernar",
+                "brightness": 0.46
+            },
+            {
+                "name": "Cursa",
+                "brightness": 2.78
+            },
+            {
+                "name": "Zaurak",
+                "brightness": 2.97
+            }
+        ],
+        "bordering_constellations": [
+            "Cetus",
+            "Fornax",
+            "Phoenix",
+            "Hydrus",
+            "Tucana",
+            "Horologium",
+            "Caelum",
+            "Lepus",
+            "Orion",
+            "Taurus"
+        ]
+    },
+    {
+        "name": "Lyra",
+        "abbreviation": "Lyr",
+        "area": 286,
+        "brightest_stars": [
+            {
+                "name": "Vega",
+                "brightness": 0.03
+            }
+        ],
+        "bordering_constellations": [
+            "Draco",
+            "Hercules",
+            "Vulpecula",
+            "Cygnus"
+        ]
+    }
+]
