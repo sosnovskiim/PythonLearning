@@ -18,5 +18,5 @@ for file in fnmatch.filter(os.listdir(), f'{input("Введите первую �
                 if t:
                     print(f'URL - {t}')
             for t in re.findall(r'([a-zA-Z_][a-zA-Z0-9_]*)', line):
-                if t and t not in kwlist:
+                if t and t != 'l' and t not in kwlist:
                     print(f'VAR - {t}')
