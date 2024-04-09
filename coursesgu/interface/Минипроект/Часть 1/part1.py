@@ -57,14 +57,6 @@ class MyWindow(QtWidgets.QWidget):
         )
         self.buttonCount.clicked.connect(self.on_click_reset)
 
-        #
-        self.timeEvent = QtWidgets.QTimeEdit(self)
-        self.timeEvent.clear()
-        self.timeEvent.time()
-        self.calendarEvent = QtWidgets.QCalendarWidget(self)
-        self.calendarEvent.setSelectedDate(QtCore.QDate(2024, 3, 2))
-        self.calendarEvent.selectedDate()
-
         self.show()
 
     def on_click_positive_or_negative(self):
