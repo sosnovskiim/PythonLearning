@@ -4,83 +4,93 @@ from part3_ui import Ui_Form
 
 
 class DecisionAssistant(QWidget, Ui_Form):
+    questions = list()
+
     def __init__(self):
         super().__init__()
         self.setupUi(self)
-        self.update_after_restart()
-        self.button_ask.clicked.connect(self.on_click_ask)
-        self.button_positive.clicked.connect(self.on_click_voice)
-        self.button_negative.clicked.connect(self.on_click_voice)
-        self.button_move_up.clicked.connect(self.on_click_move)
-        self.button_move_down.clicked.connect(self.on_click_move)
-        self.button_reset.clicked.connect(self.on_click_reset)
+        self.button_question_add.clicked.connect(self.on_click_question_add)
+        self.button_question_delete.clicked.connect(self.on_click_question_delete)
+        self.button_voice_add_positive.clicked.connect(self.on_click_voice_add)
+        self.button_voice_add_negative.clicked.connect(self.on_click_voice_add)
+        self.button_voice_move_up.clicked.connect(self.on_click_voice_move)
+        self.button_voice_move_down.clicked.connect(self.on_click_voice_move)
+        # self.update_after_start()
 
-    def on_click_ask(self):
-        if self.edit_question.text():
+    def on_click_question_add(self):
+        question = self.edit_question.text()
+        if question:
             self.question = self.edit_question.text()
             add_question_to_file(self.question)
             self.update_after_question()
 
-    def on_click_voice(self):
-        if self.sender() is self.button_positive:
-            argument = self.edit_argument.text()
-            self.positive_voices.append(argument)
-            add_positive_voice_to_file(argument)
-            self.update_after_positive_voice(argument)
-        else:
-            argument = self.edit_argument.text()
-            self.negative_voices.append(argument)
-            add_negative_voice_to_file(argument)
-            self.update_after_negative_voice(argument)
-        self.edit_argument.clear()
-
-    def on_click_move(self):
+    def on_click_question_delete(self):
+        # self.question = 'Пока нет вопроса'
+        # self.positive_voices.clear()
+        # self.negative_voices.clear()
+        # clear_voices()
+        # self.update_after_reset()
         pass
 
-    def on_click_reset(self):
-        self.question = 'Пока нет вопроса'
-        self.positive_voices.clear()
-        self.negative_voices.clear()
-        clear_voices()
-        self.update_after_reset()
+    def on_click_voice_add(self):
+        # if self.sender() is self.button_voice_add_positive:
+        #     argument = self.edit_argument.text()
+        #     self.positive_voices.append(argument)
+        #     add_positive_voice_to_file(argument)
+        #     self.update_after_positive_voice(argument)
+        # else:
+        #     argument = self.edit_argument.text()
+        #     self.negative_voices.append(argument)
+        #     add_negative_voice_to_file(argument)
+        #     self.update_after_negative_voice(argument)
+        # self.edit_argument.clear()
+        pass
 
-    def update_after_restart(self):
-        if self.question != 'Пока нет вопроса':
-            self.update_after_question()
-            self.list_positive.addItems(self.positive_voices)
-            self.list_negative.addItems(self.negative_voices)
-            self.label_positive.setText(f'Голосов: {len(self.positive_voices)}')
-            self.label_negative.setText(f'Голосов: {len(self.negative_voices)}')
+    def on_click_voice_move(self):
+        pass
 
-    def update_after_question(self):
-        self.label_question.setText(self.question)
-        self.edit_argument.setEnabled(True)
-        self.button_positive.setEnabled(True)
-        self.button_negative.setEnabled(True)
-        self.edit_question.clear()
-        self.edit_question.setEnabled(False)
-        self.button_ask.setEnabled(False)
+    def update_after_start(self):
+        # if self.question != 'Пока нет вопроса':
+        #     self.update_after_question()
+        #     self.list_voice_positive.addItems(self.positive_voices)
+        #     self.list_voice_negative.addItems(self.negative_voices)
+        #     self.label_positive.setText(f'Голосов: {len(self.positive_voices)}')
+        #     self.label_negative.setText(f'Голосов: {len(self.negative_voices)}')
+        pass
 
-    def update_after_positive_voice(self, argument):
-        self.list_positive.addItem(argument)
-        self.label_positive.setText(f'Голосов: {len(self.positive_voices)}')
+    def update_after_question_add(self):
+        # self.label_question.setText(self.question)
+        # self.edit_argument.setEnabled(True)
+        # self.button_voice_add_positive.setEnabled(True)
+        # self.button_voice_add_negative.setEnabled(True)
+        # self.edit_question.clear()
+        # self.edit_question.setEnabled(False)
+        # self.button_question_ask.setEnabled(False)
+        pass
 
-    def update_after_negative_voice(self, argument):
-        self.list_negative.addItem(argument)
-        self.label_negative.setText(f'Голосов: {len(self.negative_voices)}')
+    def update_after_question_delete(self):
+        # self.label_question.setText(self.question)
+        # self.edit_argument.clear()
+        # self.edit_argument.setEnabled(False)
+        # self.button_voice_add_positive.setEnabled(False)
+        # self.button_voice_add_negative.setEnabled(False)
+        # self.label_positive.setText('Голосов: нет')
+        # self.label_negative.setText('Голосов: нет')
+        # self.list_voice_positive.clear()
+        # self.list_voice_negative.clear()
+        # self.edit_question.setEnabled(True)
+        # self.button_question_ask.setEnabled(True)
+        pass
 
-    def update_after_reset(self):
-        self.label_question.setText(self.question)
-        self.edit_argument.clear()
-        self.edit_argument.setEnabled(False)
-        self.button_positive.setEnabled(False)
-        self.button_negative.setEnabled(False)
-        self.label_positive.setText('Голосов: нет')
-        self.label_negative.setText('Голосов: нет')
-        self.list_positive.clear()
-        self.list_negative.clear()
-        self.edit_question.setEnabled(True)
-        self.button_ask.setEnabled(True)
+    def update_after_voice_add(self, argument):
+        # self.list_voice_positive.addItem(argument)
+        # self.label_positive.setText(f'Голосов: {len(self.positive_voices)}')
+        # self.list_voice_negative.addItem(argument)
+        # self.label_negative.setText(f'Голосов: {len(self.negative_voices)}')
+        pass
+
+    def update_after_voice_move(self):
+        pass
 
 
 def get_question():
