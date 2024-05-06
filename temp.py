@@ -1,4 +1,11 @@
-from collections import Counter
+def linear_search(a: list[int], value: int):
+    n = len(a)
+    for i in range(n):
+        if a[i] == value:
+            return i
+    return False
 
-s = 'aaa 111 111 fdg dbb fff bbb bbb daas lk lk lk 12 lk 213 aaa bbb aaa dbb 0 0 0 0 0'
-print(Counter.most_common(Counter(s), 3))
+
+a = [6, -1, 4, 0, 12, -21, 7]
+value = 12
+print(linear_search(a, value))

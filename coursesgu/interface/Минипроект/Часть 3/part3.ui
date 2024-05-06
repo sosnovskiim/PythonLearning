@@ -13,7 +13,7 @@
   <property name="windowTitle">
    <string>Помощник в принятии решений</string>
   </property>
-  <widget class="QPushButton" name="button_positive">
+  <widget class="QPushButton" name="button_argument_add_positive">
    <property name="enabled">
     <bool>false</bool>
    </property>
@@ -34,7 +34,7 @@
     <string>За</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="button_negative">
+  <widget class="QPushButton" name="button_argument_add_negative">
    <property name="enabled">
     <bool>false</bool>
    </property>
@@ -82,7 +82,7 @@
     <string>Аргумент</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="button_reset">
+  <widget class="QPushButton" name="button_question_delete">
    <property name="enabled">
     <bool>false</bool>
    </property>
@@ -127,7 +127,7 @@
     <string>Вопрос</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="button_ask">
+  <widget class="QPushButton" name="button_question_add">
    <property name="geometry">
     <rect>
      <x>355</x>
@@ -145,7 +145,7 @@
     <string>Задать</string>
    </property>
   </widget>
-  <widget class="QListWidget" name="list_positive">
+  <widget class="QListWidget" name="list_argument_positive">
    <property name="enabled">
     <bool>false</bool>
    </property>
@@ -158,7 +158,7 @@
     </rect>
    </property>
   </widget>
-  <widget class="QListWidget" name="list_negative">
+  <widget class="QListWidget" name="list_argument_negative">
    <property name="enabled">
     <bool>false</bool>
    </property>
@@ -171,7 +171,7 @@
     </rect>
    </property>
   </widget>
-  <widget class="QLCDNumber" name="number_positive">
+  <widget class="QLCDNumber" name="number_argument_positive">
    <property name="geometry">
     <rect>
      <x>330</x>
@@ -181,7 +181,7 @@
     </rect>
    </property>
   </widget>
-  <widget class="QLCDNumber" name="number_negative">
+  <widget class="QLCDNumber" name="number_argument_negative">
    <property name="geometry">
     <rect>
      <x>720</x>
@@ -191,7 +191,7 @@
     </rect>
    </property>
   </widget>
-  <widget class="QPushButton" name="button_move_up">
+  <widget class="QPushButton" name="button_argument_move_up">
    <property name="enabled">
     <bool>false</bool>
    </property>
@@ -212,7 +212,7 @@
     <string>Сдвинуть вверх</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="button_move_down">
+  <widget class="QPushButton" name="button_argument_move_down">
    <property name="enabled">
     <bool>false</bool>
    </property>
@@ -233,7 +233,7 @@
     <string>Сдвинуть вниз</string>
    </property>
   </widget>
-  <widget class="QComboBox" name="combo_question">
+  <widget class="QComboBox" name="combo_box_question">
    <property name="enabled">
     <bool>false</bool>
    </property>

@@ -1,150 +1,138 @@
+import json
 import sys
 from PyQt6.QtWidgets import QApplication, QWidget
 from part3_ui import Ui_Form
 
 
-class DecisionAssistant(QWidget, Ui_Form):
-    questions = list()
+class DecisionAssistantWidget(QWidget, Ui_Form):
+    questions: list[dict] = []
+    current_question: int = -1
+    file_name: str = 'questions.json'
+    question_name: str = 'question_name'
+    positive_arguments: str = 'positive_arguments'
+    negative_arguments: str = 'negative_arguments'
 
     def __init__(self):
         super().__init__()
         self.setupUi(self)
         self.button_question_add.clicked.connect(self.on_click_question_add)
         self.button_question_delete.clicked.connect(self.on_click_question_delete)
-        self.button_voice_add_positive.clicked.connect(self.on_click_voice_add)
-        self.button_voice_add_negative.clicked.connect(self.on_click_voice_add)
-        self.button_voice_move_up.clicked.connect(self.on_click_voice_move)
-        self.button_voice_move_down.clicked.connect(self.on_click_voice_move)
-        # self.update_after_start()
+        self.combo_box_question.currentIndexChanged.connect(self.on_changed_question)
+        self.button_argument_add_positive.clicked.connect(self.on_click_argument_add)
+        self.button_argument_add_negative.clicked.connect(self.on_click_argument_add)
+        self.button_argument_move_up.clicked.connect(self.on_click_argument_move)
+        self.button_argument_move_down.clicked.connect(self.on_click_argument_move)
+        self.get_questions()
+        self.update_on_start()
 
     def on_click_question_add(self):
-        question = self.edit_question.text()
-        if question:
-            self.question = self.edit_question.text()
-            add_question_to_file(self.question)
-            self.update_after_question()
+        questions: list[str] = [q[self.question_name] for q in self.questions]
+        question: str = self.edit_question.text()
+        if question and question not in self.questions:
+            self.add_question(question=question)
+            self.update_on_question_add(question=question)
 
     def on_click_question_delete(self):
-        # self.question = 'Пока нет вопроса'
-        # self.positive_voices.clear()
-        # self.negative_voices.clear()
-        # clear_voices()
-        # self.update_after_reset()
+        self.delete_question()
+        self.update_on_question_delete()
+
+    def on_changed_question(self, index):
+        self.current_question = index
+
+    def on_click_argument_add(self):
+        argument: str = self.edit_argument.text()
+        if self.sender() is self.button_argument_add_positive:
+            arguments: list[str] = self.questions[self.current_question][self.positive_arguments]
+            if argument and argument not in arguments:
+                self.add_argument(argument=argument, is_positive=True)
+                self.update_on_argument_add(argument=argument, is_positive=True)
+        else:
+            arguments: list[str] = self.questions[self.current_question][self.negative_arguments]
+            if argument and argument not in arguments:
+                self.add_argument(argument=argument, is_positive=False)
+                self.update_on_argument_add(argument=argument, is_positive=False)
+
+    def on_click_argument_move(self):
         pass
 
-    def on_click_voice_add(self):
-        # if self.sender() is self.button_voice_add_positive:
-        #     argument = self.edit_argument.text()
-        #     self.positive_voices.append(argument)
-        #     add_positive_voice_to_file(argument)
-        #     self.update_after_positive_voice(argument)
-        # else:
-        #     argument = self.edit_argument.text()
-        #     self.negative_voices.append(argument)
-        #     add_negative_voice_to_file(argument)
-        #     self.update_after_negative_voice(argument)
-        # self.edit_argument.clear()
+    def get_questions(self):
+        with open(self.file_name, 'r', encoding='utf-8') as file_in:
+            self.questions: list[dict] = json.load(file_in)
+
+    def add_question(self, question: str):
+        self.questions.append({
+            self.question_name: question,
+            self.positive_arguments: [],
+            self.negative_arguments: [],
+        })
+        with open(self.file_name, 'w', encoding='utf-8') as file_out:
+            json.dump(self.questions, file_out, ensure_ascii=False, indent=4)
+
+    def delete_question(self):
+        self.questions.pop(self.current_question)
+        with open(self.file_name, 'w', encoding='utf-8') as file_out:
+            json.dump(self.questions, file_out, ensure_ascii=False, indent=4)
+
+    def add_argument(self, argument: str, is_positive: bool):
+        if is_positive:
+            self.questions[self.current_question][self.positive_arguments].append(argument)
+        else:
+            self.questions[self.current_question][self.negative_arguments].append(argument)
+        with open(self.file_name, 'w', encoding='utf-8') as file_out:
+            json.dump(self.questions, file_out, ensure_ascii=False, indent=4)
+
+    def update_on_start(self):
+        if len(self.questions) > 0:
+            self.update_on_questions_is_not_empty()
+            questions: list[str] = [q[self.question_name] for q in self.questions]
+            self.combo_box_question.addItems(questions)
+            self.combo_box_question.setCurrentText(self.questions[self.current_question][self.question_name])
+
+
+    def update_on_question_add(self, question: str):
+        if len(self.questions) == 1:
+            self.update_on_questions_is_not_empty()
+        self.edit_question.clear()
+        self.combo_box_question.addItem(question)
+        self.combo_box_question.setCurrentText(question)
+        self.current_question = len(self.questions) - 1
+
+    def update_on_question_delete(self):
+        if len(self.questions) == 0:
+            self.update_on_questions_is_empty()
+        self.edit_question.clear()
+        self.combo_box_question.removeItem(self.current_question)
+        self.current_question = len(self.questions) - 1
+
+    def update_on_questions_is_not_empty(self):
+        self.button_question_delete.setEnabled(True)
+        self.combo_box_question.setEnabled(True)
+        self.edit_argument.setEnabled(True)
+        self.button_argument_add_positive.setEnabled(True)
+        self.button_argument_add_negative.setEnabled(True)
+
+    def update_on_questions_is_empty(self):
+        self.button_question_delete.setEnabled(False)
+        self.combo_box_question.setEnabled(False)
+        self.edit_argument.setEnabled(False)
+        self.button_argument_add_positive.setEnabled(False)
+        self.button_argument_add_negative.setEnabled(False)
+
+    def update_on_argument_add(self, argument: str, is_positive: bool):
+        self.edit_argument.clear()
+        if is_positive:
+            self.list_argument_positive.addItem(argument)
+            self.number_argument_positive.display(len(self.questions[self.current_question][self.positive_arguments]))
+        else:
+            self.list_argument_negative.addItem(argument)
+            self.number_argument_negative.display(len(self.questions[self.current_question][self.negative_arguments]))
+
+    def update_on_argument_move(self):
         pass
-
-    def on_click_voice_move(self):
-        pass
-
-    def update_after_start(self):
-        # if self.question != 'Пока нет вопроса':
-        #     self.update_after_question()
-        #     self.list_voice_positive.addItems(self.positive_voices)
-        #     self.list_voice_negative.addItems(self.negative_voices)
-        #     self.label_positive.setText(f'Голосов: {len(self.positive_voices)}')
-        #     self.label_negative.setText(f'Голосов: {len(self.negative_voices)}')
-        pass
-
-    def update_after_question_add(self):
-        # self.label_question.setText(self.question)
-        # self.edit_argument.setEnabled(True)
-        # self.button_voice_add_positive.setEnabled(True)
-        # self.button_voice_add_negative.setEnabled(True)
-        # self.edit_question.clear()
-        # self.edit_question.setEnabled(False)
-        # self.button_question_ask.setEnabled(False)
-        pass
-
-    def update_after_question_delete(self):
-        # self.label_question.setText(self.question)
-        # self.edit_argument.clear()
-        # self.edit_argument.setEnabled(False)
-        # self.button_voice_add_positive.setEnabled(False)
-        # self.button_voice_add_negative.setEnabled(False)
-        # self.label_positive.setText('Голосов: нет')
-        # self.label_negative.setText('Голосов: нет')
-        # self.list_voice_positive.clear()
-        # self.list_voice_negative.clear()
-        # self.edit_question.setEnabled(True)
-        # self.button_question_ask.setEnabled(True)
-        pass
-
-    def update_after_voice_add(self, argument):
-        # self.list_voice_positive.addItem(argument)
-        # self.label_positive.setText(f'Голосов: {len(self.positive_voices)}')
-        # self.list_voice_negative.addItem(argument)
-        # self.label_negative.setText(f'Голосов: {len(self.negative_voices)}')
-        pass
-
-    def update_after_voice_move(self):
-        pass
-
-
-def get_question():
-    with open('question.txt') as f:
-        temp = f.read()
-        if temp:
-            return temp
-        return 'Пока нет вопроса'
-
-
-def get_positive_voices():
-    with open('positive.txt') as f:
-        temp = f.read().split('\n')
-        if len(temp) > 1:
-            return temp[1:]
-        return list()
-
-
-def get_negative_voices():
-    with open('negative.txt') as f:
-        temp = f.read().split('\n')
-        if len(temp) > 1:
-            return temp[1:]
-        return list()
-
-
-def add_question_to_file(question):
-    with open('question.txt', 'w') as f:
-        f.write(question)
-
-
-def add_positive_voice_to_file(voice):
-    with open('positive.txt', 'a') as f:
-        f.write('\n')
-        f.write(voice)
-
-
-def add_negative_voice_to_file(voice):
-    with open('negative.txt', 'a') as f:
-        f.write('\n')
-        f.write(voice)
-
-
-def clear_voices():
-    with open('question.txt', 'w') as f:
-        f.write('')
-    with open('positive.txt', 'w') as f:
-        f.write('')
-    with open('negative.txt', 'w') as f:
-        f.write('')
 
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
-    ex = DecisionAssistant()
+    ex = DecisionAssistantWidget()
     ex.show()
     sys.exit(app.exec())

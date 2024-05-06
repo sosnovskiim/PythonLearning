@@ -1,0 +1,13 @@
+[
+    {
+        "question_name": "a",
+        "positive_arguments": [
+            "a",
+            "b"
+        ],
+        "negative_arguments": [
+            "c",
+            "d"
+        ]
+    }
+]
