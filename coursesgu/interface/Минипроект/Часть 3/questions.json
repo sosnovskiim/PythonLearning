@@ -1,13 +1,22 @@
 [
     {
-        "question_name": "a",
-        "positive_arguments": [
-            "a",
-            "b"
+        "question_name": "afdsf",
+        "arguments_positive": [
+            "fdf",
+            "fdsf",
+            "fdsfa"
         ],
-        "negative_arguments": [
-            "c",
-            "d"
+        "arguments_negative": [
+            "fadsg"
+        ]
+    },
+    {
+        "question_name": "fdsgh",
+        "arguments_positive": [
+            "dsag"
+        ],
+        "arguments_negative": [
+            "gfdh"
         ]
     }
 ]

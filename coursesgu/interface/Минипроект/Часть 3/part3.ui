@@ -145,7 +145,7 @@
     <string>Задать</string>
    </property>
   </widget>
-  <widget class="QListWidget" name="list_argument_positive">
+  <widget class="QListWidget" name="list_arguments_positive">
    <property name="enabled">
     <bool>false</bool>
    </property>
@@ -158,7 +158,7 @@
     </rect>
    </property>
   </widget>
-  <widget class="QListWidget" name="list_argument_negative">
+  <widget class="QListWidget" name="list_arguments_negative">
    <property name="enabled">
     <bool>false</bool>
    </property>
@@ -171,7 +171,7 @@
     </rect>
    </property>
   </widget>
-  <widget class="QLCDNumber" name="number_argument_positive">
+  <widget class="QLCDNumber" name="number_arguments_positive">
    <property name="geometry">
     <rect>
      <x>330</x>
@@ -181,7 +181,7 @@
     </rect>
    </property>
   </widget>
-  <widget class="QLCDNumber" name="number_argument_negative">
+  <widget class="QLCDNumber" name="number_arguments_negative">
    <property name="geometry">
     <rect>
      <x>720</x>
