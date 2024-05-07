@@ -1,11 +1,10 @@
 import json
 import sys
-from PyQt6.QtWidgets import QApplication, QWidget, QListWidgetItem
+from PyQt6.QtWidgets import QApplication, QWidget
 from part3_ui import Ui_Form
 
 
-# кнопки перемещения аргументов enabled при смене вопроса при выделенном аргументе
-class DecisionAssistantWidget(QWidget, Ui_Form):
+class DecisionAssistant(QWidget, Ui_Form):
     questions: list[dict]
     current_question: int
     current_argument: int
@@ -69,22 +68,18 @@ class DecisionAssistantWidget(QWidget, Ui_Form):
         self.current_argument = index
         if self.sender() is self.list_arguments_positive:
             self.is_current_list_positive = True
-            self.update_on_argument_changed(index=index, is_positive=True)
         else:
             self.is_current_list_positive = False
-            self.update_on_argument_changed(index=index, is_positive=False)
+        self.update_on_argument_changed(index=index, is_positive=self.is_current_list_positive)
 
     def on_click_argument_move(self):
         if self.sender() is self.button_argument_move_up:
             self.move_argument(index=self.current_argument, is_positive=self.is_current_list_positive, is_up=True)
-            self.update_on_argument_move()
         else:
             self.move_argument(index=self.current_argument, is_positive=self.is_current_list_positive, is_up=False)
-            self.update_on_argument_move()
-
-    def get_questions(self):
-        with open(self.file_name, 'r', encoding='utf-8') as file_in:
-            self.questions: list[dict] = json.load(file_in)
+        self.update_on_argument_move(is_positive=self.is_current_list_positive)
+        self.button_argument_move_up.setEnabled(False)
+        self.button_argument_move_down.setEnabled(False)
 
     def add_question(self, question: str):
         self.questions.append({
@@ -92,31 +87,42 @@ class DecisionAssistantWidget(QWidget, Ui_Form):
             self.arguments_positive: [],
             self.arguments_negative: [],
         })
-        with open(self.file_name, 'w', encoding='utf-8') as file_out:
-            json.dump(self.questions, file_out, ensure_ascii=False, indent=4)
+        self.set_questions()
 
     def delete_question(self):
         self.questions.pop(self.current_question)
-        with open(self.file_name, 'w', encoding='utf-8') as file_out:
-            json.dump(self.questions, file_out, ensure_ascii=False, indent=4)
+        self.set_questions()
 
     def add_argument(self, argument: str, is_positive: bool):
         if is_positive:
-            self.questions[self.current_question][self.arguments_positive].append(argument)
+            arguments: list[str] = self.questions[self.current_question][self.arguments_positive]
         else:
-            self.questions[self.current_question][self.arguments_negative].append(argument)
-        with open(self.file_name, 'w', encoding='utf-8') as file_out:
-            json.dump(self.questions, file_out, ensure_ascii=False, indent=4)
+            arguments: list[str] = self.questions[self.current_question][self.arguments_negative]
+        arguments.append(argument)
+        self.set_questions()
 
     def move_argument(self, index: int, is_positive: bool, is_up: bool):
-        pass
+        shift = 1 if is_up else -1
+        if is_positive:
+            arguments: list[str] = self.questions[self.current_question][self.arguments_positive]
+        else:
+            arguments: list[str] = self.questions[self.current_question][self.arguments_negative]
+        arguments[index], arguments[index - shift] = arguments[index - shift], arguments[index]
+        self.set_questions()
+
+    def get_questions(self):
+        with open(self.file_name, 'r', encoding='utf-8') as file_in:
+            self.questions: list[dict] = json.load(file_in)
+
+    def set_questions(self):
+        with open(self.file_name, 'w', encoding='utf-8') as file_out:
+            json.dump(self.questions, file_out, ensure_ascii=False, indent=4)
 
     def update_on_start(self):
         if len(self.questions) > 0:
             self.update_on_questions_is_not_empty()
             questions: list[str] = [q[self.question_name] for q in self.questions]
             self.combo_box_question.addItems(questions)
-            self.combo_box_question.setCurrentText(self.questions[self.current_question][self.question_name])
             self.update_on_question_changed()
 
     def update_on_question_add(self, question: str):
@@ -172,25 +178,31 @@ class DecisionAssistantWidget(QWidget, Ui_Form):
             self.number_arguments_negative.display(len(self.questions[self.current_question][self.arguments_negative]))
 
     def update_on_argument_changed(self, index: int, is_positive: bool):
-        if index == 0:
-            self.button_argument_move_up.setEnabled(False)
-        else:
-            self.button_argument_move_up.setEnabled(True)
-        if is_positive:
-            arguments: list[str] = self.questions[self.current_question][self.arguments_positive]
-        else:
-            arguments: list[str] = self.questions[self.current_question][self.arguments_negative]
-        if index == len(arguments) - 1:
-            self.button_argument_move_down.setEnabled(False)
-        else:
-            self.button_argument_move_down.setEnabled(True)
+        if index != -1:
+            if index == 0:
+                self.button_argument_move_up.setEnabled(False)
+            else:
+                self.button_argument_move_up.setEnabled(True)
+            if is_positive:
+                arguments: list[str] = self.questions[self.current_question][self.arguments_positive]
+            else:
+                arguments: list[str] = self.questions[self.current_question][self.arguments_negative]
+            if index == len(arguments) - 1:
+                self.button_argument_move_down.setEnabled(False)
+            else:
+                self.button_argument_move_down.setEnabled(True)
 
-    def update_on_argument_move(self):
-        pass
+    def update_on_argument_move(self, is_positive: bool):
+        if is_positive:
+            self.list_arguments_positive.clear()
+            self.list_arguments_positive.addItems(self.questions[self.current_question][self.arguments_positive])
+        else:
+            self.list_arguments_negative.clear()
+            self.list_arguments_negative.addItems(self.questions[self.current_question][self.arguments_negative])
 
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
-    ex = DecisionAssistantWidget()
+    ex = DecisionAssistant()
     ex.show()
     sys.exit(app.exec())
