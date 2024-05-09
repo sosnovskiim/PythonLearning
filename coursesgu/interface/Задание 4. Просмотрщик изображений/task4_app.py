@@ -1,6 +1,6 @@
 import os
 import sys
-from PyQt6.QtWidgets import QApplication, QWidget, QSizePolicy
+from PyQt6.QtWidgets import QApplication, QWidget
 from PyQt6.QtGui import QPixmap
 from PyQt6.QtCore import Qt
 from task4_ui import Ui_Form
@@ -18,6 +18,7 @@ class ImageViewer(QWidget, Ui_Form):
         self.button_go_to_next.clicked.connect(self.on_click_go_to_next)
         self.button_go_to_last.clicked.connect(self.on_click_go_to_last)
         os.chdir(os.path.join(os.curdir, 'images'))
+        self.setWindowTitle(os.getcwd())
         self.images = [image for image in os.listdir()]
         self.update_image(index=self.current_image)
 
