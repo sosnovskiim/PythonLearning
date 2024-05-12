@@ -46,7 +46,7 @@ def input_password():
         elif not any(c in ascii_uppercase for c in set(temp)):
             print('\n Пароль должен включать хотя бы одну прописную букву.')
         elif not any(c in digits for c in set(temp)):
-            print('\n Пароль должен включать хотя бы цифру.')
+            print('\n Пароль должен включать хотя бы одну цифру.')
         elif not any(c in punctuation for c in set(temp)):
             print('\n Пароль должен включать хотя бы один спец. символ.')
         else:
@@ -201,7 +201,7 @@ with open('database.txt', 'w') as db:
                   f'\nОтчество: {middle_name if middle_name else unspecified}'
                   f'\nМесто проживания: {place if place else unspecified}'
                   f'\nО себе: {about if about else unspecified}')
-print('\n Вы успешно зарегестрировались в системе.')
+print('\n Вы успешно зарегистрировались в системе.')
 with open('database.txt', 'r') as db:
     [print(f' {s}', end='') for s in db.readlines()]
 input()
