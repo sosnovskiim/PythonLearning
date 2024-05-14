@@ -20,11 +20,11 @@ class AuthorisationWidget(QWidget, Ui_AuthorisationForm):
         super().__init__()
         self.setupUi(self)
         self.label_error.hide()
-        self.get_users()
         self.button_sign_in.clicked.connect(self.on_click_sign_in)
         self.button_sign_up.clicked.connect(self.on_click_sign_up)
 
     def on_click_sign_in(self):
+        self.get_users()
         for user in self.users:
             if user[self.key_login] == self.input_login.text():
                 self.current_user: dict[str, str] = user
