@@ -7,7 +7,9 @@ with open('input.txt', encoding='utf-8') as file_in:
         surname, name, patronymic, year, *grades = line.split()
         students.append({SURNAME: surname, NAME: name, PATRONYMIC: patronymic, YEAR: year, GRADES: ' '.join(grades)})
         j = i
-        while j > 0 and (surname < students[j - 1][SURNAME] or year > students[j - 1][YEAR]):
+        while j > 0 and (surname < students[j - 1][SURNAME] or (
+                surname == students[j - 1][SURNAME] and year > students[j - 1][YEAR]
+        )):
             students[j], students[j - 1] = students[j - 1], students[j]
             j -= 1
         i += 1
