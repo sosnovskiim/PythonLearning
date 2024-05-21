@@ -1,5 +1,13 @@
-def func(a, b, c):
-    return ''.join(map(str, (a, b, c)))
+# def func(a):
+#     return str(a)
+#
+#
+class Bug:
+    def __repr__(self):
+        raise BaseException
+
+    def __str__(self):
+        raise BaseException
 
 
-func('♡', '♡', '♡')
+func(Bug())

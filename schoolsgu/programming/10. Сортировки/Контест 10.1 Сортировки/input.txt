@@ -1,7 +1,15 @@
-5
+13
+tovar1 firma2 5
+tovar1 firma1 5
 tovar1 firma1 10
 tovar2 firma1 20
+tovar3 firma2 5
+tovar3 firma1 5
+tovar1 firma1 5
+tovar1 firma2 5
 tovar1 firma3 5
 tovar1 firma2 30
 tovar3 firma3 50
+tovar2 firma1 20
+tovar2 firma2 20
 firma3
