@@ -4,10 +4,10 @@
 #
 class Bug:
     def __repr__(self):
-        raise BaseException
+        raise Exception
 
     def __str__(self):
-        raise BaseException
+        raise Exception
 
 
 func(Bug())
