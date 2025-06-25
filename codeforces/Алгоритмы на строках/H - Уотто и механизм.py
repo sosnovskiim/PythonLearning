@@ -15,21 +15,20 @@ t = {hash_abc(input(), a, b, p) for _ in range(n)}
 r = ""
 for _ in range(m):
     s = input()
-    # h = hash_abc(s, a, b, p)
+    h = hash_abc(s, a, b, p)
     f = False
     for i in range(len(s)):
-        # h_old = (a[s[i]] * b[i]) % p
-        # h -= h_old
+        h_old = (a[s[i]] * b[i]) % p
+        h -= h_old
         for c in a.keys():
             if c != s[i]:
-                h = hash_abc(s[:i] + c + s[i + 1:], a, b, p)
-                # h_new = (a[c] * b[i]) % p
-                # h += h_new
+                h_new = (a[c] * b[i]) % p
+                h += h_new
                 f = h in t
-                # h -= h_new
+                h -= h_new
                 if f:
                     break
-        # h += h_old
+        h += h_old
         if f:
             r += "YES\n"
             break
