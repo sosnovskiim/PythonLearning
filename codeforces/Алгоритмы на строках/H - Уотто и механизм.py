@@ -1,37 +1,40 @@
-def hash_abc(s: str, a: dict[str, int], b: list[int], p: int) -> int:
-    h = 0
-    for i in range(len(s)):
-        h += (a[s[i]] * b[i]) % p
-    return h
+def hash_abc(s: str) -> (int, int):
+    h1 = h2 = 0
+    for c in s:
+        h1 = (h1 * b1 + ord(c)) % p1
+        h2 = (h2 * b2 + ord(c)) % p2
+    return h1, h2
 
 
 n, m = map(int, input().split())
-a = {"a": ord("a"), "b": ord("b"), "c": ord("c")}
-b = [1] * 10 ** 6
-p = 10 ** 9 + 7
-for i in range(1, len(b)):
-    b[i] = (5 * b[i - 1]) % p
-t = {hash_abc(input(), a, b, p) for _ in range(n)}
-r = ""
+b1 = 911382629
+b2 = 972663749
+p1 = 10 ** 9 + 7
+p2 = 10 ** 9 + 9
+max_len = 6 * 10 ** 5 + 1
+pow1 = [1] * max_len
+pow2 = [1] * max_len
+for i in range(1, max_len):
+    pow1[i] = (pow1[i - 1] * b1) % p1
+    pow2[i] = (pow2[i - 1] * b2) % p2
+t = {hash_abc(input()) for _ in range(n)}
+r = []
 for _ in range(m):
     s = input()
-    h = hash_abc(s, a, b, p)
+    ln = len(s)
+    h1, h2 = hash_abc(s)
     f = False
-    for i in range(len(s)):
-        h_old = (a[s[i]] * b[i]) % p
-        h -= h_old
-        for c in a.keys():
+    for i in range(ln):
+        h_old_1 = (h1 - ord(s[i]) * pow1[ln - i - 1]) % p1
+        h_old_2 = (h2 - ord(s[i]) * pow2[ln - i - 1]) % p2
+        for c in ("a", "b", "c"):
             if c != s[i]:
-                h_new = (a[c] * b[i]) % p
-                h += h_new
-                f = h in t
-                h -= h_new
+                h_new_1 = (h_old_1 + ord(c) * pow1[ln - i - 1]) % p1
+                h_new_2 = (h_old_2 + ord(c) * pow2[ln - i - 1]) % p2
+                f = (h_new_1, h_new_2) in t
                 if f:
                     break
-        h += h_old
         if f:
-            r += "YES\n"
             break
-    else:
-        r += "NO\n"
-print(r)
+    r.append("YES" if f else "NO")
+print('\n'.join(r))
