@@ -45,10 +45,8 @@ with open("dict.txt", encoding="utf-8") as file_in:
 with open("queries.txt", encoding="utf-8") as file_in:
     queries = file_in.read().splitlines()
 corrections = []
-i = 0
 for query in queries[:100]:
     corrections.append(correct_typo(query))
-    i += 1
-    print(i)
+    print(len(corrections))
 with open("corrections.txt", "w", encoding="utf-8") as file_out:
     file_out.write("\n".join(corrections))
