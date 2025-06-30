@@ -42,11 +42,13 @@ def generate_intermediate_words(w: str) -> set[str]:
 
 with open("dict.txt", encoding="utf-8") as file_in:
     dictionary = file_in.read().splitlines()
+
 with open("queries.txt", encoding="utf-8") as file_in:
     queries = file_in.read().splitlines()
+
 corrections = []
-for query in queries[:100]:
+for query in queries:
     corrections.append(correct_typo(query))
-    print(len(corrections))
+
 with open("corrections.txt", "w", encoding="utf-8") as file_out:
     file_out.write("\n".join(corrections))
